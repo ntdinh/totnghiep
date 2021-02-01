@@ -6,8 +6,7 @@ let app = express();
 //Con ket qua mongodb
 ConnectDB();
 
-let hostname = "localhost";
-let port = 8000;
+ 
 
 app.get("/test-data", async (req,res)=>{
     try {
@@ -24,6 +23,6 @@ app.get("/test-data", async (req,res)=>{
    
 });
 
-app.listen(port,hostname,()=>{
-    console.log(`hello Dinh, I'm running at ${hostname} : ${port}/`);
+app.listen(process.env.APP_PORT,process.env.APP_HOST,()=>{
+    console.log(`hello Dinh, I'm running at ${process.env.APP_HOST} : ${process.env.APP_PORT}/`);
 });
