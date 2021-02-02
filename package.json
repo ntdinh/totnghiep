@@ -1,0 +1,31 @@
+{
+  "name": "totnghiep",
+  "version": "1.0.0",
+  "description": "do an tn",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "babel-node src/server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ntdinh/totnghiep.git"
+  },
+  "author": "Tien Dinh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ntdinh/totnghiep/issues"
+  },
+  "homepage": "https://github.com/ntdinh/totnghiep#readme",
+  "dependencies": {
+    "bluebird": "^3.5.3",
+    "ejs": "^2.5.7",
+    "express": "^4.17.1",
+    "express-ejs-extend": "0.0.1",
+    "mongoose": "^4.13.9"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0"
+  }
+}
