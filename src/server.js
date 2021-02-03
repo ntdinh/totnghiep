@@ -1,7 +1,8 @@
 import express  from"express";
 import ConnectDB from "./config/connectDB";
 import configViewEngine from "./config/viewEngine";
-import initRoutes from "./routes/web"
+import initRoutes from "./routes/web";
+import bodyParser from "body-parser";
 
 let app = express();
 //Con ket qua mongodb
@@ -11,6 +12,8 @@ ConnectDB();
 
  configViewEngine(app);
 
+ // body papp.us
+ app.use(bodyParser.urlencoded({extended:true}));
 
  // Init all routes
  initRoutes(app);
