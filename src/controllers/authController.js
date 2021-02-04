@@ -1,6 +1,7 @@
  
 import {validationResult} from "express-validator/check";
 import {auth} from "./../services/index";
+import {transSuccess} from " ./../../lang/vi";
 
 let getLoginRegister =  (req,res)=>{
     return res.render("auth/master",{
@@ -9,9 +10,7 @@ let getLoginRegister =  (req,res)=>{
     });
 };
 
- let getLogout = (req,res) =>{
-
- };
+  
 
  let postRegister = async (req,res) =>{
     let errorArr = [];
@@ -56,10 +55,33 @@ let getLoginRegister =  (req,res)=>{
         req.flash("errors",errorArr);
         return res.redirect("/login-register");
         }
-    }
+    };
+
+let getLogout = (req,res)=>{
+    req.logout(); // delete session dang nhap passsport
+    req.flash("success",transSuccess.loguot_success);
+    return res.redirect("/login-register");
+};
+ // Kiem tra da dang nhap hay chua
+ let checkLoggedIn = (req,res,next)=>{
+    if(!req.isAuthenticated()){
+        return res.redirect("/login-register");
+    };
+    next();
+ };
+ let checkLoggedOut = (req,res,next)=>{
+    if(req.isAuthenticated()){
+        return res.redirect("/");
+    };
+    next();
+ };
+
 module.exports = {
     getLoginRegister : getLoginRegister,
     getLogout : getLogout,
     postRegister : postRegister,
-    verifyAccount : verifyAccount
+    verifyAccount : verifyAccount,
+    checkLoggedIn:checkLoggedIn,
+    checkLoggedOut:checkLoggedOut
+
 };

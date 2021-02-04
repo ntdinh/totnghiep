@@ -20,7 +20,8 @@ export const transSuccess = {
     account_active :"Kích hoạt tài khoản thành công, vui lòng quay lại trang đăng nhập",
     loginSuccess : (username)=>{
         return `Xin chào ${username}` ;
-    }
+    },
+    loguot_success : "Đăng xuất tài khoản thành công !!!"
 };
 
 
