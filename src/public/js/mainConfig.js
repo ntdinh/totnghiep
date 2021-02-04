@@ -10,6 +10,12 @@ function nineScrollLeft() {
     scrollspeed: 50
   });
 }
+function flashMasterNotify(){
+  let notify =$(".master-success-message").text();
+  if(notify.length){
+    alertify.notify(notify,"success",5);
+  }
+}
 
 function nineScrollRight() {
   $('.right .chat').niceScroll({
@@ -171,4 +177,7 @@ $(document).ready(function() {
 
   // Action hủy việc tạo nhóm trò chuyện
   cancelCreateGroup();
+
+  // thong bao thanh cong
+  flashMasterNotify();
 });

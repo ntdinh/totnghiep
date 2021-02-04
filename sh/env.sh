@@ -10,3 +10,9 @@ export DB_PASSWORD=""
 # cau hinh pỏt
 export APP_HOST=localhost
 export APP_PORT=8000
+
+# cau hinh email accout
+export MAIL_USER=dinh1304199x@gmail.com
+export MAIL_PASSWORD=0987904342
+export MAIL_HOST=smtp.gmail.com
+export MAIL_PORT=587
