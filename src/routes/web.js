@@ -1,12 +1,15 @@
 import express from "express";
-import {home, auth} from "./../controllers/index";
+import {home, auth,user} from "./../controllers/index";
 import {authValid} from "./../validation/index";
 import passport from "passport";
 import initPassportLocal from "./../controllers/passportController/local";
+import initPassportFacebook from "./../controllers/passportController/facebook";
+import initPassportGoogle from "./../controllers/passportController/google";
 
 //init a passport
 initPassportLocal();
-
+initPassportFacebook();
+initPassportGoogle();
 let router = express.Router();
 
 /**
@@ -27,7 +30,22 @@ let router = express.Router();
       successFlash : true,
       failureFlash : true
     }));
+    //facebook
+    router.get("/auth/facebook",auth.checkLoggedOut,passport.authenticate("facebook",{scope : ["email"]}));
+    router.get("/auth/facebook/callback",auth.checkLoggedOut,passport.authenticate("facebook",{
+      successRedirect : "/",
+      failureRedirect : "/login-register"
+    }));
+    // google
+    router.get("/auth/google",auth.checkLoggedOut,passport.authenticate("google",{scope : ["email"]}));
+    router.get("/auth/google/callback",auth.checkLoggedOut,passport.authenticate("google",{
+      successRedirect : "/",
+      failureRedirect : "/login-register"
+    }));
+
     router.get("/logout",auth.checkLoggedIn,auth.getLogout);
+    router.put("/user/update-avatar",auth.checkLoggedIn,user.updateAvatar);
+
 
     return app.use("/",router);
     

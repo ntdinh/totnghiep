@@ -4,7 +4,7 @@ import expressEjsExtend from "express-ejs-extend";
 
 /**
  * Cau hinh file eng
- * @param app
+ 
  */
 let configViewEngine = (app)=>{
     app.use(express.static("./src/public"));
