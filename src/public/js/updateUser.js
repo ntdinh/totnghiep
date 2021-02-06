@@ -1,6 +1,7 @@
 let userAvatar = null;
 let userInfo = {};
 let originAvatarSrc = null;
+let originUserInfo = {};
 
 function updateUserInfo(){
     $("#input-change-avatar").bind("change",function (){
@@ -57,49 +58,101 @@ function updateUserInfo(){
         userInfo.phone = $(this).val();
     });
 }
+
+function callUpdateUserAvatar(){
+    $.ajax({
+        url : "/user/update-avatar",
+        type : "put",
+        cache : false,
+        contentType : false,
+        processData : false,
+        data : userAvatar,
+        success : function(result){
+             
+            $(".user-modal-alert-success").find("span").text(result.message);
+            $(".user-modal-alert-success").css("display","block");
+
+            $("#navbar-avatar").attr("src",result.imageSrc);
+
+            //update origin avatar
+            originAvatarSrc = result.imageSrc;
+
+            $("#input-btn-cancel-update-user").click();
+        },
+        error : function(error){
+            // that bai
+             console.log(error);
+            $(".user-modal-alert-error").find("span").text(error.responseText);
+            $(".user-modal-alert-error").css("display","block");
+
+            $("#input-btn-cancel-update-user").click();
+        },
+     });
+}
+
+function callupdateUserInfo(){
+    $.ajax({
+        url : "/user/update-info",
+        type : "put",
+        data : userInfo,
+        success : function(result){
+            console.log(result);
+            $(".user-modal-alert-success").find("span").text(result.message);
+            $(".user-modal-alert-success").css("display","block");
+
+                // update user
+            originUserInfo = Object.assign(originUserInfo,userInfo);
+            //update usernamr trong navbar
+            $("#navbar-username").text(originUserInfo.username);
+
+            $("#input-btn-cancel-update-user").click();
+        },
+        error : function (error){
+            // that bai
+            console.log(error);
+            $(".user-modal-alert-error").find("span").text(error.responseText);
+            $(".user-modal-alert-error").css("display","block");
+
+            $("#input-btn-cancel-update-user").click();
+        },
+     });
+}
+
+
 $(document).ready(function(){
     updateUserInfo();
     originAvatarSrc = $("avatar").attr("src");
+    originUserInfo = {
+        username : $("#input-change-username").val(),
+      gender :  ( $("#input-change-gender-male").is(":checked")) ? $("#input-change-gender-male").val() :  $("#input-change-gender-female").val(),
+      address :  $("#input-change-address").val(),
+      phone :  $("#input-change-phone").val(),
+    };
+    // update info sau khi thay doi anh
 
     $("#input-btn-update-user").bind("click",function(){
-         if($.isEmptyObject(userInfo) && (!userAvatar)) {
+         if($.isEmptyObject(userInfo) && !userAvatar) {
              alertify.notify("Bạn cần thay đổi thông tin trước khi cập nhật !!!","error",7);
              return false;
          }
-         $.ajax({
-            url : "/user/update-avatar",
-            type : "put",
-            cache : false,
-            contentType : false,
-            processData : false,
-            data : userAvatar,
-            success : function(result){
-                console.log(result);
-                $(".user-modal-alert-success").find("span").text(result.message);
-                $(".user-modal-alert-success").css("display","block");
-
-                $(".navbar-avatar").attr("src",result.imageSrc);
-
-                //update origin avatar
-                originAvatarSrc = result.imageSrc;
-
-                $("#input-btn-cancel-update-user").click();
-            },
-            error : function (error){
-                // that bai
-                console.log(error);
-                $(".user-modal-alert-error").find("span").text(error.responseText);
-                $(".user-modal-alert-error").css("display","block");
-
-                $("#input-btn-cancel-update-user").click();
-            },
-         });
+         if(userAvatar){
+            callUpdateUserAvatar();
+         }
+         if($.isEmptyObject(userInfo) ){
+            callupdateUserInfo();
+         }
+        
     });
     $("#input-btn-cancel-update-user").bind("click",function(){
           userAvatar = null;
           userInfo = {};
           $("#input-change-avatar").val(null);
           $("avatar").attr("src",originAvatarSrc);
+          
+          $("#input-change-username").val(originUserInfo.username);
+          (originUserInfo.gender==="male") ?  $("#input-change-gender-male").click() :  $("#input-change-gender-female").click();
+          $("#input-change-address").val(originUserInfo.address);
+          $("#input-change-phone").val(originUserInfo.phone);
     });
     
 });
