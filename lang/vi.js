@@ -24,7 +24,8 @@ export const transValidation = {
         loginSuccess : (username)=>{
             return `Xin chào ${username}` ;
         },
-        loguot_success : "Đăng xuất tài khoản thành công !!!"
+        loguot_success : "Đăng xuất tài khoản thành công !!!",
+        avatar_updated : "Cập nhật dữ liệu thành công",
     };
     
     
