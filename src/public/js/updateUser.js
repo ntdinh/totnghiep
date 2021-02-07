@@ -2,6 +2,7 @@ let userAvatar = null;
 let userInfo = {};
 let originAvatarSrc = null;
 let originUserInfo = {};
+let userUpdatePassword = {};
 
 function updateUserInfo(){
     $("#input-change-avatar").bind("change",function (){
@@ -10,12 +11,12 @@ function updateUserInfo(){
         let limit = 1048576;
 
         if($.inArray(fileData.type,math) === -1) {
-            alertify.notify("Kiểu file không hợp lệ","error",7);
+            alertify.notify("Kiểu file không hợp lệ","error",2);
             $(this).val(null);
             return false;
         }
         if(fileData.size > limit) {
-            alertify.notify("Ảnh vượt quá kích thước 1MB","error",7);
+            alertify.notify("Ảnh vượt quá kích thước 1MB","error",2);
             $(this).val(null);
             return false;
         }
@@ -39,23 +40,78 @@ function updateUserInfo(){
 
             userAvatar = formData;
         } else {
-            alertify.notify("Upload ảnh thất bại","error",7);
+            alertify.notify("Upload ảnh thất bại","error",2);
         }
     });
     $("#input-change-username").bind("change",function(){
-        userInfo.username = $(this).val();
+        let username = $(this).val();
+        let regexUsername = new RegExp(/^[\s0-9a-zA-Z_ÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹ ]+$/);
+        if(!regexUsername.test(username)|| username.length < 3  || username.length >17){
+            alertify.notify("Tên tài khoản giới hạn từ 3-17 kí tự và không chứa kí tự đặc biệt","error",2);
+            $(this).val(originUserInfo.username);
+            //sau khi kiem tra xong, thi xoa du lieu nhap sai
+            delete userInfo.username;
+            return false;
+        }
+        userInfo.username = username;
     });
     $("#input-change-gender-male").bind("click",function(){
-        userInfo.gender = $(this).val();
+        let gender = $(this).val();
+        if(gender!=="male"){
+            alertify.notify("Xin lỗi, bạn là đồng tính chăng,haha","error",2);
+            $(this).val(originUserInfo.gender);
+            //sau khi kiem tra xong, thi xoa du lieu nhap sai
+            delete userInfo.gender;
+            return false;
+        }
+        userInfo.gender = gender
     });
     $("#input-change-gender-female").bind("click",function(){
-        userInfo.gender = $(this).val();
+        let gender = $(this).val();
+        if(gender!=="female"){
+            alertify.notify("Xin lỗi, bạn là đồng tính chăng,haha","error",2);
+            $(this).val(originUserInfo.gender);
+            //sau khi kiem tra xong, thi xoa du lieu nhap sai
+            delete userInfo.gender;
+            return false;
+        }
+        userInfo.gender = gender
     });
     $("#input-change-address").bind("change",function(){
-        userInfo.address = $(this).val();
+        let address = $(this).val();
+        if(address.length <3 || address.length >30){
+            alertify.notify("Địa chỉ không nên dài quá","error",2);
+            $(this).val(originUserInfo.address);
+            //sau khi kiem tra xong, thi xoa du lieu nhap sai
+            delete userInfo.address;
+            return false;
+        }
+        userInfo.address = address;
     });
     $("#input-change-phone").bind("change",function(){
-        userInfo.phone = $(this).val();
+        let phone = $(this).val();
+        let regexPhone = new RegExp(/^(0)[0-9]{10}$/);
+        if(regexPhone.test(phone)){
+            alertify.notify("Số điện thoại bắt đầu bằng số 0, giớ hạn từ 10 kí tự","error",2);
+            $(this).val(originUserInfo.phone);
+            //sau khi kiem tra xong, thi xoa du lieu nhap sai
+            delete userInfo.phone;
+            return false;
+        }
+        userInfo.phone = phone;
+    });
+    $("#input-change-current-password").bind("change",function(){
+        let currentPassword = $(this).val();
+        let regexPassword = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/);
+
+        if(regexPassword.test(currentPassword)){
+            alertify.notify("Mật khẩu phải chứa ít nhất 8 kí tự bao gồm cả số và chữ","error",2);
+            $(this).val(null);
+            //sau khi kiem tra xong, thi xoa du lieu nhap sai
+            delete  userUpdatePassword.currentPassword
+            return false;
+        }
+        userUpdatePassword.currentPassword = currentPassword;
     });
 }
 
@@ -138,7 +194,7 @@ $(document).ready(function(){
          if(userAvatar){
             callUpdateUserAvatar();
          }
-         if($.isEmptyObject(userInfo) ){
+         if(!$.isEmptyObject(userInfo) ){
             callupdateUserInfo();
          }
         

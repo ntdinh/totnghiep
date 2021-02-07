@@ -3,7 +3,10 @@ export const transValidation = {
     gender_incorrect :"Bạn là giới tính thứ 3 ???",
     password_incorrect :"Mật khẩu phải chứa ít nhất 8 kí tự bao gồm cả số và chữ",
     password_confirmation_incorrect :"Nhập lại mật khẩu",
-    
+    update_username : "Tên tài khoản giới hạn từ 3-17 kí tự và không chứa kí tự đặc biệt",
+    update_gender : "Xin lỗi, bạn là đồng tính chăng,haha",
+    update_address : "Địa chỉ không nên dài quá",
+    update_phone : "Số điện thoại bắt đầu bằng số 0, giớ hạn từ 10 kí tự",
     };
      
     

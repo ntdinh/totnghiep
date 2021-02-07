@@ -1281,4 +1281,9 @@ label:focus,
 .user-modal-alert-success{
   display: none;
 }
-
+.user-modal-password-alert-error{
+  display: none;
+}
+.user-modal-password-alert-success{
+display: none;
+}
