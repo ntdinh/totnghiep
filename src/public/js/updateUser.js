@@ -91,7 +91,7 @@ function updateUserInfo(){
     $("#input-change-phone").bind("change",function(){
         let phone = $(this).val();
         let regexPhone = new RegExp(/^(0)[0-9]{10}$/);
-        if(regexPhone.test(phone)){
+        if(!regexPhone.test(phone)){
             alertify.notify("Số điện thoại bắt đầu bằng số 0, giớ hạn từ 10 kí tự","error",2);
             $(this).val(originUserInfo.phone);
             //sau khi kiem tra xong, thi xoa du lieu nhap sai
@@ -104,7 +104,7 @@ function updateUserInfo(){
         let currentPassword = $(this).val();
         let regexPassword = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/);
 
-        if(regexPassword.test(currentPassword)){
+        if(regexPassword.test(currentPassword) || currentPassword.length < 8 ){
             alertify.notify("Mật khẩu phải chứa ít nhất 8 kí tự bao gồm cả số và chữ","error",2);
             $(this).val(null);
             //sau khi kiem tra xong, thi xoa du lieu nhap sai
@@ -113,6 +113,35 @@ function updateUserInfo(){
         }
         userUpdatePassword.currentPassword = currentPassword;
     });
+    $("#input-change-new-password").bind("change",function(){
+        let newPassword = $(this).val();
+        let regexPassword = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/);
+
+        if(!regexPassword.test(newPassword)){
+            alertify.notify("Mật khẩu phải chứa ít nhất 8 kí tự bao gồm cả số và chữ","error",7);
+            $(this).val(null);
+            //sau khi kiem tra xong, thi xoa du lieu nhap sai
+            delete  userUpdatePassword.newPassword
+            return false;
+        }
+        userUpdatePassword.newPassword = newPassword;
+    });
+    // $("#input-change-confirm-new-password").bind("change",function(){
+    //     let confirmNewPassword = $(this).val();
+    //     if(!userUpdatePassword.newPassword){
+    //         alertify.notify("Bạn chưa nhập mật khẩu mới","error",7);
+       
+    //     $(this).val(null);
+    //     delete  userUpdatePassword.confirmNewPassword;
+    //     }
+    //     if(confirmNewPassword !==userUpdatePassword.newPassword){
+    //         alertify.notify("Nhập lại mật khâu chưa chính xác","error",7);
+       
+    //     $(this).val(null);
+    //     delete  userUpdatePassword.confirmNewPassword;
+    //     }
+    //     userUpdatePassword.confirmNewPassword = confirmNewPassword;
+    // });
 }
 
 function callUpdateUserAvatar(){
@@ -174,7 +203,7 @@ function callupdateUserInfo(){
      });
 }
 
-
+ 
 $(document).ready(function(){
     updateUserInfo();
     originAvatarSrc = $("avatar").attr("src");
