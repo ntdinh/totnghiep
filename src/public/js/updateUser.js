@@ -4,6 +4,31 @@ let originAvatarSrc = null;
 let originUserInfo = {};
 let userUpdatePassword = {};
 
+function callLogout(){
+    let timer1;
+    Swal.fire({
+        position: 'top-end',
+        
+        title: 'Tự động đăng xuất sau 5, vui lòng đăng nhập lại',
+        html : "  <strong> </strong>",
+        //showConfirmButton: false,
+        timer: 5000,
+        onBeforeOpen : ()=>{
+            Swal.showLoading();
+            timer1 = setInterval(()=>{
+                Swal.getContent().querySelector("strong").texContent = Math.ceil(Swal.getTimerLeft() /1000);
+            },1000);
+        },
+        onClose : ()=> {
+            clearInterval(timer1);
+        }
+      }).then((result) => {
+        $.get("/logout",function(){
+            location.reload();
+        });
+      });
+}
+
 function updateUserInfo(){
     $("#input-change-avatar").bind("change",function (){
         let fileData =  $(this).prop("files")[0];
@@ -104,7 +129,7 @@ function updateUserInfo(){
         let currentPassword = $(this).val();
         let regexPassword = new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/);
 
-        if(regexPassword.test(currentPassword) || currentPassword.length < 8 ){
+        if(!regexPassword.test(currentPassword) || currentPassword.length < 8 ){
             alertify.notify("Mật khẩu phải chứa ít nhất 8 kí tự bao gồm cả số và chữ","error",2);
             $(this).val(null);
             //sau khi kiem tra xong, thi xoa du lieu nhap sai
@@ -126,22 +151,22 @@ function updateUserInfo(){
         }
         userUpdatePassword.newPassword = newPassword;
     });
-    // $("#input-change-confirm-new-password").bind("change",function(){
-    //     let confirmNewPassword = $(this).val();
-    //     if(!userUpdatePassword.newPassword){
-    //         alertify.notify("Bạn chưa nhập mật khẩu mới","error",7);
-       
-    //     $(this).val(null);
-    //     delete  userUpdatePassword.confirmNewPassword;
-    //     }
-    //     if(confirmNewPassword !==userUpdatePassword.newPassword){
-    //         alertify.notify("Nhập lại mật khâu chưa chính xác","error",7);
-       
-    //     $(this).val(null);
-    //     delete  userUpdatePassword.confirmNewPassword;
-    //     }
-    //     userUpdatePassword.confirmNewPassword = confirmNewPassword;
-    // });
+    $("#input-change-confirm-new-password").bind("change",function(){
+        let confirmNewPassword = $(this).val();
+        if(!userUpdatePassword.newPassword){
+            alertify.notify("Bạn chưa nhập mật khẩu mới","error",7);
+        $(this).val(null);
+        delete  userUpdatePassword.confirmNewPassword;
+        return false;
+        }
+        if(confirmNewPassword !==userUpdatePassword.newPassword){
+            alertify.notify("Nhập lại mật khâu chưa chính xác","error",7);
+        $(this).val(null);
+        delete  userUpdatePassword.confirmNewPassword;
+        return false;
+        }
+        userUpdatePassword.confirmNewPassword = confirmNewPassword;
+    });
 }
 
 function callUpdateUserAvatar(){
@@ -202,7 +227,36 @@ function callupdateUserInfo(){
         },
      });
 }
+function callupdateUserPassword(){
+    $.ajax({
+        url : "/user/update-password",
+        type : "put",
+        data : userUpdatePassword,
+        success : function(result){
+            console.log(result);
+            $(".user-modal-password-alert-success").find("span").text(result.message);
+            $(".user-modal-password-alert-success").css("display","block");
 
+                // update user
+            //originUserInfo = Object.assign(originUserInfo,userInfo);
+            //update usernamr trong navbar
+            $("#navbar-username").text(originUserInfo.username);
+
+            $("#input-btn-cancel-update-user-password").click();
+            //logout sau khi thay doi thanh cong
+
+            callLogout();
+        },
+        error : function (error){
+            // that bai
+            console.log(error);
+            $(".user-modal-password-alert-error").find("span").text(error.responseText);
+            $(".user-modal-password-alert-error").css("display","block");
+
+            $("#input-btn-cancel-update-user-password").click();
+        },
+     });
+}
  
 $(document).ready(function(){
     updateUserInfo();
@@ -239,5 +293,34 @@ $(document).ready(function(){
           $("#input-change-address").val(originUserInfo.address);
           $("#input-change-phone").val(originUserInfo.phone);
     });
-    
+    $("#input-btn-update-user-password").bind("click",function(){
+        console.log(userUpdatePassword);
+        if(!userUpdatePassword.currentPassword || !userUpdatePassword.newPassword || !userUpdatePassword.confirmNewPassword){
+            alertify.notify("Bạn phải thay đổi đầy đủ thông tin","error",7);
+            return false;
+        }
+        Swal.fire({
+            title: "Bạn có chắc chắn thay đổi mật khẩu?",
+            text: "Hành động này không thể  hoàn tác!",
+            icon: "info",
+            showCancelButton: true,
+            confirmButtonColor: "#2ECC71",
+            cancelButtonColor: "#ff7675",
+            confirmButtonText: "Xác nhận",
+            cancelButtonText : "Hủy"
+          }).then((result) => {
+            if(!result.value){
+                $("#input-btn-cancel-update-user-password").click();
+                return false;
+            }
+                callupdateUserPassword();
+          })
+   
+    });
+    $("#input-btn-cancel-update-user-password").bind("click",function(){
+        userUpdatePassword ={};
+        $("#input-change-current-password").val(null);
+        $("#input-change-confirm-new-password").val(null);
+        $("#input-change-new-password").val(null);
+    });
 });

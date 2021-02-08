@@ -16,7 +16,18 @@ let updateInfo = [
     .optional()
     .matches(/^(0)[0-9]{9}$/)
 ];
+let updatePassword = [
+    check("currentPassword",transValidation.password_incorrect)
+    .isLength({min :8})
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/),
+    check("newPassword",transValidation.password_incorrect)
+    .isLength({min :8})
+    .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{8,}$/),
+    check("confirmNewPassword",transValidation.password_confirmation_incorrect)
+     .custom((value,{req})=>  value === req.body.newPassword)
+];
 
 module.exports = {
     updateInfo : updateInfo,
+    updatePassword : updatePassword
 }
