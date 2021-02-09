@@ -30,5 +30,22 @@ ContactSchema.statics = {
           ]
         }).exec();
       },
+      //kiem tra ton tai cua 2 user
+      checkExists(userId,contactId) {
+        return this.findOne({
+          $or :[
+            {
+              $and : [
+                {"userId" :userId},
+                {"contactId" : contactId}
+              ]},
+            {
+              $and : [
+                {"userId" :contactId},
+                {"contactId" : userId}
+              ]}
+          ]
+        }).exec();
+      }
 };
 module.exports = mongoose.model("contact",ContactSchema)

@@ -20,18 +20,26 @@ let findUsersContact = (currentUserId, keyword) => {
   });
 };
 
-// let addNew = (currentUserId, contactId) => {
-//   return new Promise(async (resolve, reject) => {
-//     let contactExitsts = await ContacModel.checkExists(currentUserId, contactId);
-//     if (contactExitsts) {
-//       return reject(false);
-//     };
+let addNew = (currentUserId, contactId) => {
+  return new Promise(async (resolve, reject) => {
+    let contactExitsts = await ContacModel.checkExists(currentUserId, contactId);
+    if (contactExitsts) {
+      return reject(false);
+    };
+    let newContactItem = {
+      userId : currentUserId,
+      contactId : contactId
+    };
+    let newContact =  await ContacModel.createNew(newContactItem);
+    resolve(newContact);
+  });
+}
 
-//     // create contact
-//     let newContactItem = {
-//       userId: currentUserId,
-//       contactId: contactId
-//     };
+    // // create contact
+    // let newContactItem = {
+    //   userId: currentUserId,
+    //   contactId: contactId
+    // }
 
 //     let newContact = await ContacModel.createNew(newContactItem);
 
@@ -261,9 +269,11 @@ let countAllContacts = (currentUserId) => {
 //     resolve(users);
 //   });
 // };
+
 module.exports = {
-  findUsersContact,
-  // addNew,
+  findUsersContact :findUsersContact,
+
+  addNew : addNew ,
   // removeContact,
   // removeRequestContactSent,
   // removeRequestContactReceived,

@@ -155,7 +155,7 @@ let searchFriends = async (req, res) => {
 
 module.exports = {
   findUsersContact,
-  addNew,
+  addNew : addNew,
   removeContact,
   removeRequestContactSent,
   removeREquestContactReceived,
