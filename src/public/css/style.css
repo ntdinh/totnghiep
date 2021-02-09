@@ -198,6 +198,7 @@ label:focus,
 .contactPanel .user-remove-contact,
 .contactPanel .user-remove-request-contact,
 .contactPanel .user-acccept-contact-received,
+.contactPanel .user-remove-request-contact-sent,
 .contactPanel .user-remove-request-sent,
 .contactPanel .user-reject-request-contact-received {
   box-sizing: border-box;
@@ -228,7 +229,7 @@ label:focus,
   margin: 10px 0px 5px 2px;
 }
 
-.contactPanel .user-remove-request-contact {
+.contactPanel .user-remove-request-contact-sent {
   display: none;
 }
 
@@ -237,7 +238,9 @@ label:focus,
   background-color: #ff7675;
   margin: 10px 0px 5px 2px;
 }
-
+.contactPanel .contactPanel .user-remove-request-contact-sent {
+  display: none;
+}
 .show-number-contacts {
   font-weight: bold;
   color: red;

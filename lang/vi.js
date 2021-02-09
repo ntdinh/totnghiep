@@ -7,6 +7,7 @@ export const transValidation = {
     update_gender : "Xin lỗi, bạn là đồng tính chăng,haha",
     update_address : "Địa chỉ không nên dài quá",
     update_phone : "Số điện thoại bắt đầu bằng số 0, giớ hạn từ 10 kí tự",
+    find_users_contact: "Không cho phép kí tự đặc biệt, chỉ cho phép chứ số và khoảng trống",
     };
      
     
