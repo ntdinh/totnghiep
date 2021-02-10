@@ -1,3 +1,5 @@
+
+
 function addContact(){
     $(".user-add-new-contact").bind("click",function (){
         let targetId = $(this).data("uid");
@@ -5,6 +7,7 @@ function addContact(){
         if(data.success ){
             $("#find-user").find(`div.user-add-new-contact[data-uid = ${targetId} ]`).hide();
             $("#find-user").find(`div.user-remove-request-contact-sent[data-uid = ${targetId} ]`).css("display", "inline-block");
+            increaseNumberNotifContact("count-request-contact-sent");
             //xu li realtime o bai sau
         }
        });

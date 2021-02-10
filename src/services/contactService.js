@@ -35,14 +35,6 @@ let addNew = (currentUserId, contactId) => {
   });
 }
 
-    // // create contact
-    // let newContactItem = {
-    //   userId: currentUserId,
-    //   contactId: contactId
-    // }
-
-//     let newContact = await ContacModel.createNew(newContactItem);
-
 //     // create notification
 //     let notificationItem = {
 //       senderId: currentUserId,
@@ -57,16 +49,16 @@ let addNew = (currentUserId, contactId) => {
 //   });
 // };
 
-// let removeContact = (currentUserId, contactId) => {
-//   return new Promise(async (resolve, reject) => {
-//     let removeContact = await ContacModel.removeContact(currentUserId, contactId);
-//     if (removeContact.result.n === 0) {
-//       return reject(false);
-//     };
+let removeRequestContact = (currentUserId, contactId) => {
+  return new Promise(async (resolve, reject) => {
+    let removeRequestContact = await ContacModel.removeRequestContact(currentUserId, contactId);
+    if (removeRequestContact.result.n === 0) {
+      return reject(false);
+    };
 
-//     resolve(true);
-//   });
-// };
+    resolve(true);
+  });
+};
 
 
 
@@ -274,7 +266,7 @@ module.exports = {
   findUsersContact :findUsersContact,
 
   addNew : addNew ,
-  // removeContact,
+   removeRequestContact : removeRequestContact,
   // removeRequestContactSent,
   // removeRequestContactReceived,
   // approveRequestContactReceived,

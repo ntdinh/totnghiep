@@ -46,6 +46,16 @@ ContactSchema.statics = {
               ]}
           ]
         }).exec();
+      },
+
+      //xoa contact cua 2 user
+      removeRequestContact(userId,contactId) {
+        return this.remove({
+          $and : [
+            {"userId" : userId},
+            {"contactId" : contactId}
+          ]
+        }).exec();
       }
 };
 module.exports = mongoose.model("contact",ContactSchema)

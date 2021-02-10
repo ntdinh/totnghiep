@@ -34,12 +34,13 @@ let addNew = async (req, res) => {
     return res.status(500).send(error);
   }
 };
+ 
 
-let removeContact = async (req, res) => {
+let removeRequestContact = async (req, res) => {
   try {
     let currentUserId = req.user._id;
     let contactId = req.body.uid;
-    let removeContact = await contact.removeContact(currentUserId, contactId);
+    let removeContact = await contact.removeRequestContact(currentUserId, contactId);
     return res.status(200).send({ success: !!removeContact });
   } catch (error) {
     return res.status(500).send(error);
@@ -156,7 +157,7 @@ let searchFriends = async (req, res) => {
 module.exports = {
   findUsersContact,
   addNew : addNew,
-  removeContact,
+  removeRequestContact : removeRequestContact,
   removeRequestContactSent,
   removeREquestContactReceived,
   approveRequestContactReceived,

@@ -1,0 +1,21 @@
+
+
+function removeRequestContact(){
+    $(".user-remove-request-contact-sent").bind("click",function (){
+        let targetId = $(this).data("uid");
+       $.ajax ({
+        url : "/contact/remove-request-contact",
+        type : "delete",
+        data : {uid : targetId},
+        success : function(data){
+            if(data.success ){
+                $("#find-user").find(`div.user-remove-request-contact-sent[data-uid = ${targetId} ]`).hide();
+                $("#find-user").find(`div.user-add-new-contact[data-uid = ${targetId} ]`).css("display", "inline-block");
+                decreaseNumberNotifContact("count-request-contact-sent");
+                //xu li realtime o bai sau
+            }
+        }
+       });
+        
+    });
+}
