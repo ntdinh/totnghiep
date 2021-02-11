@@ -9,8 +9,10 @@ export DB_PASSWORD=""
 
 # cau hinh pỏt
 export APP_HOST=localhost
- 
 export APP_PORT=8000
+# cau hinh key
+export SESSION_KEY="express.sid"
+export SESSION_SECRET="mySecret"
 
 # cau hinh email accout
 export MAIL_USER=dinh1304199x@gmail.com
