@@ -3,33 +3,35 @@ import bcrypt from "bcrypt";
 
 let Schema = mongoose.Schema;
 
-let UserSchema = new Schema ({
 
-    username : String,
-    gender :{type :String,default :"male"},
-    phone :({type : String,default:null}),
-    address :({type :String, default :null}),
-    avatar :{type :String,default :"avavar.jpg"},
-    role :{type : String,default :"user"},
-    local :{
-        email :{type :String,trim :true},
-        password :String,
-        isActive :{type :Boolean,default:false},
-        verifyToken :String
-    },
-    facebook :{
-        uid :String,
-        token :String,
-        email : {type :String,trim:true}
-    },
-    google :{
-        uid :String,
-        token :String,
-        email : {type :String,trim:true}
-    },
-    createAt :{type : Number,default :Date.now},
-    updateAt :{type : Number,default :null},
-    deleteAt :{type : Number,default :null}
+ 
+
+let UserSchema = new Schema({
+  username: String,
+  gender: { type: String, default: "male" },
+  phone: { type: String, default: null },
+  address: { type: String, default: null },
+  avatar: { type: String, default: "avatar-default.jpg" },
+  role: { type: String, default: "user" },
+  local: {
+    email: { type: String, trim: true },
+    password: String,
+    isActive: { type: Boolean, default: false },
+    verifyToken: String
+  },
+  facebook: {
+    uid: String,
+    token: String,
+    email: { type: String, trim: true }
+  },
+  google: {
+    uid: String,
+    token: String,
+    email: { type: String, trim: true }
+  },
+  createdAt: { type: Number, default: Date.now },
+  updatedAt: { type: Number, default: null },
+  deletedAt: { type: Number, default: null }
 });
 
 UserSchema.statics = {
@@ -45,12 +47,14 @@ UserSchema.statics = {
     removeById(id){
         return this.findByIdAndRemove(id).exec();
     },
-    // update
-    update(token){
-        return this.findOneAndUpdate(
-            {"local.verifyToken" : token},
-            {"local.isActive" : true, "local.verifyToken" : null}   
-        ).exec();
+    findByToken(token) {
+      return this.findOne({ "local.verifyToken": token }).exec();
+    },
+    verify(token) {
+      return this.findOneAndUpdate(
+        { "local.verifyToken": token },
+        { "local.isActive": true, "local.verifyToken": null }
+      ).exec();
     },
     getUserById(id){
         return this.findById(id).exec();

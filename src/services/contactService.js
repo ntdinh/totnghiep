@@ -26,28 +26,24 @@ let addNew = (currentUserId, contactId) => {
     if (contactExitsts) {
       return reject(false);
     };
+
+    // create contact
     let newContactItem = {
       userId : currentUserId,
       contactId : contactId
     };
     let newContact =  await ContacModel.createNew(newContactItem);
+    let notificationItem  ={
+      senderId : currentUserId,
+      receiverId : contactId,
+      type :NotificationModel.types.ADD_CONTACT
+    };
+    await NotificationModel.model.createNew(notificationItem);
     resolve(newContact);
   });
 }
 
-//     // create notification
-//     let notificationItem = {
-//       senderId: currentUserId,
-//       receiverId: contactId,
-//       type: NotificationModel.type.ADD_CONTACT
-//     };
-
-//     await NotificationModel.model.createNew(notificationItem);
-
-
-//     resolve(newContact);
-//   });
-// };
+ 
 
 let removeRequestContact = (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
@@ -55,7 +51,9 @@ let removeRequestContact = (currentUserId, contactId) => {
     if (removeRequestContact.result.n === 0) {
       return reject(false);
     };
-
+    
+    //remove notification
+    await NotificationModel.model.removeRequestContactNotification(currentUserId,contactId,NotificationModel.types.ADD_CONTACT);
     resolve(true);
   });
 };

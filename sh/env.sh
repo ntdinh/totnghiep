@@ -19,7 +19,7 @@ export MAIL_USER=dinh1304199x@gmail.com
 export MAIL_PASSWORD=0987904342
 export MAIL_HOST=smtp.gmail.com
 export MAIL_PORT=587
-export APP_PORT=8000
+ 
   # cau hinh facebook
 export FB_APP_ID=738352720416018
 export FB_APP_SECRET=39d5eefcd3b74961efa39a3f4c5998ad

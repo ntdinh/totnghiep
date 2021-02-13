@@ -23,7 +23,7 @@ let router = express.Router();
    
     router.post("/register",auth.checkLoggedOut,authValid.register,auth.postRegister);
     router.get("/verify/:token",auth.checkLoggedOut,auth.verifyAccount);
-    
+   // router.get("/verify/:token", auth.checkloggedOut, auth.verifyAccout);
     router.post("/login",auth.checkLoggedOut,passport.authenticate("local",{
       successRedirect : "/",
       failureRedirect : "/login-register",

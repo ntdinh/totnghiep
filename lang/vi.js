@@ -15,6 +15,7 @@ export const transValidation = {
         accout_in_use : "Email đã được sử dụng",
         accout_remove : "Tài khoản không tồn tại",
         account_undefined : "Tài khoản không tồn tại",
+        token_undefined: 'token không tồn tại, tài khoản đã active!',
         accout_not_active : "Email này đã được đăng ký nhưng chưa xác nhận tài khoản, vui lòng vào Email để xác nhận",
         login_failed : "Tài khoản hoặc mật khẩu sai, xin vui lòng thử lại",
         serve_error : "Có lỗi phía server, vui lòng liên hệ nhân viên hỗ trợ để được trợ giúp",
