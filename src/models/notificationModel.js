@@ -36,7 +36,26 @@ NotificationSchema.statics = {
 const  NOTIFICATION_TYPES= {
     ADD_CONTACT : "add_contact"
 };
+
+const  NOTIFICATION_CONTENTS= {
+    getContent : (notificationType,isRead,userId,username,userAvatar) =>{
+        if(notificationType === NOTIFICATION_TYPES.ADD_CONTACT){
+            if(!isRead){
+                return `<span class="notif-readed-false " data-uid="${userId}">
+                <img class="avatar-small" src="images/users/${userAvatar}" alt=""> 
+                <strong>${username}</strong> đã gửi cho bạn lời mời kết bạn !
+            </span><br><br><br>`;
+            }
+           return    `<span   data-uid="${userId}">
+           <img class="avatar-small" src="images/users/${userAvatar}" alt=""> 
+           <strong>${username}</strong> đã gửi cho bạn lời mời kết bạn !
+       </span><br><br><br>`;
+        }
+        return "NO matching with notification type";
+    }
+};
 module.exports = {
     model : mongoose.model("notification",NotificationSchema),
-    types : NOTIFICATION_TYPES
+    types : NOTIFICATION_TYPES,
+    contents : NOTIFICATION_CONTENTS
 };

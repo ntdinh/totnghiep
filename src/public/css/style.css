@@ -281,7 +281,7 @@ label:focus,
 }
 
 .noti_contact_counter {
-  display: none;
+  display: block;
   position: absolute;
   background: #E1141E;
   color: #FFF;
@@ -296,7 +296,7 @@ label:focus,
 }
 
 .noti_counter {
-  display: none;
+  display: block;
   position: absolute;
   background: #E1141E;
   color: #FFF;
@@ -323,6 +323,7 @@ label:focus,
   margin-top: 5px;
   margin-left: 7px;
   color: #333;
+  padding:  5px;
 }
 
 .seeAll {
@@ -1290,4 +1291,10 @@ label:focus,
 }
 .user-modal-password-alert-success{
 display: none;
+}
+.notif-readed-false {
+background: #E3E8F0;
+}
+.display-none{
+  display: none;
 }
