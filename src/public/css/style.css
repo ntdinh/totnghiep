@@ -257,7 +257,17 @@ label:focus,
   z-index: 999;
 }
 
-#notifications h3 {
+#notifications  {
+  display: block;
+  color: #333;
+  background: #FFF;
+  font-weight: bold;
+  font-size: 13px;
+  padding: 8px;
+  margin: 0;
+  border-bottom: solid 1px rgba(100, 100, 100, .30);
+}
+#popup-mark-notif-as-read {
   display: block;
   color: #333;
   background: #FFF;
@@ -311,21 +321,24 @@ label:focus,
 }
 
 .noti_content {
-  position: relative;
+ 
   height: 300px;
   background-color: #fff;
   overflow: auto;
 }
 
-.noti_content>span {
-  position: absolute;
+.noti_content>div {
+ 
   max-width: 95%;
-  margin-top: 5px;
-  margin-left: 7px;
+  margin: 5px 0px 0px 7px ;
+   
   color: #333;
   padding:  5px;
 }
-
+.noti_content>div:hover{
+  cursor: pointer;
+  background-color: #eceff1;
+}
 .seeAll {
   background: #F6F7F8;
   padding: 8px;
@@ -1297,4 +1310,22 @@ background: #E3E8F0;
 }
 .display-none{
   display: none;
+}
+#noti_Button :hover {
+  text-decoration: none;
+  
+}
+
+.list-notifications li {
+  border-bottom: 1px solid #dfe6e9;
+  width: 90%;
+  height: auto;
+  padding: 7px 0px 12px 5px;
+  margin: 0 auto;
+  list-style-type: none;
+}
+
+.list-notifications li:hover {
+  cursor: pointer;
+  background-color: #eceff1;
 }

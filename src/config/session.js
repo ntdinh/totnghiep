@@ -26,7 +26,7 @@ let config  = (app) =>{
         resave : true,
         saveUninitialized :false,
         cookie :{
-            maxAge :1000*60*60*24 // 1 ngay
+            maxAge :1000*60*60*24*30 // 1 ngay
         }
     }));
 };

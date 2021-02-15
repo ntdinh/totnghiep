@@ -18,6 +18,19 @@ let getNotifications = (currentUserId,limit = 10) => {
         }
     });
 };
+let countNotifUnread = (currentUserId ) => {
+    return new Promise ( async(resolve,reject) => {
+        try {
+             let notificationsUnread = await NotificationModel.model.countNotifUnread(currentUserId);
+           resolve(notificationsUnread);
+        } catch (error) {
+            reject(error);
+        }
+    });
+};
+// lay 10 ban ghi thong bao 1 lan load
+ 
 module.exports = {
-    getNotifications
+    getNotifications,
+    countNotifUnread
 }

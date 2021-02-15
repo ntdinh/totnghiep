@@ -21,7 +21,7 @@ function removeRequestContact(){
     });
 }
 socket.on("response-remove-request-contact",function (user){
-    $(".noti_content").find(`span[data-uid = ${user.id}]`).remove();
+    $(".noti_content").find(`div[data-uid = ${user.id}]`).remove();
 //  xoa gui loi moi ket ban, xoa thogn bao
     decreaseNumberNotification("count-request-contact-received");
     decreaseNumberNotification("noti_contact_counter");
