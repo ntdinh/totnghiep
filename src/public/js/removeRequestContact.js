@@ -21,7 +21,12 @@ function removeRequestContact(){
     });
 }
 socket.on("response-remove-request-contact",function (user){
+
+    //xoa o phan thong bao
     $(".noti_content").find(`div[data-uid = ${user.id}]`).remove();
+    // xoa o phan xem tat ca thong bao
+    $("ul.list-notifications").find(`li>div[data-uid = ${user.id}]`).parent().remove();
+
 //  xoa gui loi moi ket ban, xoa thogn bao
     decreaseNumberNotification("count-request-contact-received");
     decreaseNumberNotification("noti_contact_counter");
