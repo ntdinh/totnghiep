@@ -2,7 +2,7 @@
 import NotificationModel from './../models/notificationModel';
 import UserModel from './../models/userModel';
 
-const LIMIT_NUMBER = 1;
+const LIMIT_NUMBER = 10;
 // lay 10 ban ghi thong bao 1 lan load
 let getNotifications = (currentUserId) => {
     return new Promise ( async(resolve,reject) => {
