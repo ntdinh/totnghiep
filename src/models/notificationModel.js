@@ -40,11 +40,21 @@ NotificationSchema.statics = {
             ]
         }).exec();
     },
+    /// xem them thong bao
     readMore(userId,skip,limit){
         return this.find({
             "receiverId" : userId
         }).sort({"createAt" : -1}).skip(skip).limit(limit).exec();
+    },
+    markAllAsRead(userId,targetUser){
+        return this.updateMany({
+            $and : [
+                {"receiverId" : userId},
+                {"senderId" : {$in : targetUser}}
+            ]
+        },{"isRead" : true}).exec();
     }
+    
 }
 
 const  NOTIFICATION_TYPES= {

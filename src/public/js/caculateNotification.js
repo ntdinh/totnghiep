@@ -1,6 +1,6 @@
-function increaseNumberNotification(className){
+function increaseNumberNotification(className,number){
     let currentValue = +$(`.${className}`).text(); // them dấu + vào trước chuoix string sang number
-    currentValue +=1;
+    currentValue +=number;
     if(currentValue === 0){
         $(`.${className}`).css("display","none").html("");
     } else {
@@ -8,9 +8,9 @@ function increaseNumberNotification(className){
     }
 }
 // giam so user dang cho xac nhan
-function decreaseNumberNotification(className){
+function decreaseNumberNotification(className,number){
     let currentValue = +$(`.${className}`).text(); // them dấu + vào trước chuoix string sang number
-    currentValue -=1;
+    currentValue -=number;
     if(currentValue === 0){
         $(`.${className}`).css("display","none").html("");
     } else {

@@ -44,9 +44,19 @@ let readMore = (currentUserId,skipNumberNotification ) => {
         }
     });
 };
- 
+ // xoa, danh dau tat ca thong bao
+let markAllAsRead = (currentUserId,targetUser ) => {
+    return new Promise ( async(resolve,reject) => {
+        try {
+             await NotificationModel.model.markAllAsRead(currentUserId,targetUser );
+             resolve(true);
+        } catch (error) {
+            reject(false);
+        }
+    });
+};
 module.exports = {
     getNotifications,
     countNotifUnread,
-    readMore
+    readMore,markAllAsRead
 }
