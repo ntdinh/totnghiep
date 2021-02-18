@@ -3,7 +3,7 @@ import UserModel from './../models/userModel';
 import NotificationModel from './../models/notificationModel';
 import _ from 'lodash';
 
-const LIMIT_NUMBER = 10;
+const LIMIT_NUMBER = 1;
 
 let findUsersContact = (currentUserId, keyword) => {
   return new Promise( async (resolve, reject) => {
@@ -45,15 +45,15 @@ let addNew = (currentUserId, contactId) => {
 
  
 
-let removeRequestContact = (currentUserId, contactId) => {
+let removeRequestContactSent = (currentUserId, contactId) => {
   return new Promise(async (resolve, reject) => {
-    let removeRequestContact = await ContacModel.removeRequestContact(currentUserId, contactId);
-    if (removeRequestContact.result.n === 0) {
+    let removeRequestContactSent = await ContacModel.removeRequestContactSent(currentUserId, contactId);
+    if (removeRequestContactSent.result.n === 0) {
       return reject(false);
     };
     
     //remove notification
-    await NotificationModel.model.removeRequestContactNotification(currentUserId,contactId,NotificationModel.types.ADD_CONTACT);
+    await NotificationModel.model.removeRequestContactSentNotification(currentUserId,contactId,NotificationModel.types.ADD_CONTACT);
     resolve(true);
   });
 };
@@ -64,10 +64,10 @@ let getContacts = (currentUserId) => {
       let contacts = await ContacModel.getContacts(currentUserId,  LIMIT_NUMBER);
              let users = contacts.map( async (contact) => {
                if(contact.contactId == currentUserId){
-                return await UserModel.getUserById(contact.userId);
+                return await UserModel.getUserDataById(contact.userId);
                }
                else {
-                return await UserModel.getUserById(contact.contactId);
+                return await UserModel.getUserDataById(contact.contactId);
                }
               
             }); 
@@ -82,7 +82,7 @@ let getContactsSent = (currentUserId) => {
     try {
       let contacts = await ContacModel.getContactsSent(currentUserId,  LIMIT_NUMBER);
              let users = contacts.map( async (contact) => {
-               return await UserModel.getUserById(contact.contactId);
+               return await UserModel.getUserDataById(contact.contactId);
             }); 
             resolve( await Promise.all(users));
     } catch (error) {
@@ -95,7 +95,7 @@ let getContactsReceived = (currentUserId) => {
     try {
       let contacts = await ContacModel.getContactsReceived(currentUserId,  LIMIT_NUMBER);
              let users = contacts.map( async (contact) => {
-               return await UserModel.getUserById(contact.userId);
+               return await UserModel.getUserDataById(contact.userId);
             }); 
             resolve( await Promise.all(users));
     } catch (error) {
@@ -135,17 +135,50 @@ let countAllContactsReceived = (currentUserId) => {
     }
   });
 };
+let readMoreContacts = (currentUserId, skipNumberContacts) =>{
+  return new Promise ( async(resolve,reject) => {
+    try {
+         let newContacts = await ContacModel.readMoreContacts(currentUserId,skipNumberContacts,LIMIT_NUMBER);
+         let users = newContacts.map( async (contact) => {
+          if(contact.contactId == currentUserId){
+            return await UserModel.getUserDataById(contact.userId);
+           }
+           else {
+            return await UserModel.getUserDataById(contact.contactId);
+           }
+        }); 
+        resolve( await Promise.all(users));
+    } catch (error) {
+        reject(error);
+    }
+});
+};
+let readMoreContactsSent = (currentUserId, skipNumberContacts) =>{
+  return new Promise ( async(resolve,reject) => {
+    try {
+         let newContacts = await ContacModel.readMoreContactsSent(currentUserId,skipNumberContacts,LIMIT_NUMBER);
+         let users = newContacts.map( async (contact) => {
+          return await UserModel.getUserDataById(contact.contactId);
+        }); 
+        resolve( await Promise.all(users));
+    } catch (error) {
+        reject(error);
+    }
+});
+};
 
 module.exports = {
   findUsersContact :findUsersContact,
   addNew : addNew ,
-   removeRequestContact : removeRequestContact,
+  removeRequestContactSent : removeRequestContactSent,
    countAllContacts,
    getContacts,
    getContactsSent,
    getContactsReceived,
    countAllContacts,
    countAllContactsSent,
-   countAllContactsReceived
+   countAllContactsReceived,
+   readMoreContacts,
+   readMoreContactsSent
   
 };

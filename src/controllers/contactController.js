@@ -154,6 +154,7 @@ let searchFriends = async (req, res) => {
   }
 };
 
+
 module.exports = {
   findUsersContact,
   addNew : addNew,

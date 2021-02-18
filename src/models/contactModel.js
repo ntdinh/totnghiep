@@ -111,5 +111,16 @@ ContactSchema.statics = {
           ]
         }).exec();
       },
+      readMoreContacts(userId , skip , limit){
+        return  this.find({
+          $and : [
+             {$or : [
+              {"userId" : userId},
+              {"contactId" :userId }
+             ]},
+            {"status" : true}
+          ]
+        }).sort({"createAt" : -1}).skip(skip).limit(limit).exec();
+      },
 };
 module.exports = mongoose.model("contact",ContactSchema)

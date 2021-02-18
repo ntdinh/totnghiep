@@ -51,6 +51,8 @@ let router = express.Router();
    router.get( "/contact/find-users/:keyword", auth.checkLoggedIn,contactValid.findUserContact,contact.findUsersContact);
    router.post( "/contact/add-new", auth.checkLoggedIn ,contact.addNew);
    router.delete( "/contact/remove-request-contact", auth.checkLoggedIn ,contact.removeRequestContact);
+   router.get( "/contact/read-more-contacts", auth.checkLoggedIn ,contact.readMoreContacts);
+
    router.get( "/notification/read-more", auth.checkLoggedIn ,notification.readMore );
    router.put( "/notfication/mark-all-as-read", auth.checkLoggedIn ,notification.markAllAsRead );
 

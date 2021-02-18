@@ -1,10 +1,10 @@
 
 
-function removeRequestContact(){
+function removeRequestContactSent(){
     $(".user-remove-request-contact-sent").bind("click",function (){
         let targetId = $(this).data("uid");
        $.ajax ({
-        url : "/contact/remove-request-contact",
+        url : "/contact/remove-request-contact-sent",
         type : "delete",
         data : {uid : targetId},
         success : function(data){
@@ -14,14 +14,14 @@ function removeRequestContact(){
                 decreaseNumberNotifContact("count-request-contact-sent");
              // xoa thong bao khi huy ket ban o tab dang cho xac nhan
                 $("#request-contact-sent").find(`li[data-uid = ${targetId}]`).remove();
-                socket.emit("remove-request-contact",{contactId : targetId});
+                socket.emit("remove-request-contact-sent",{contactId : targetId});
             }
         }
        });
         
     });
 }
-socket.on("response-remove-request-contact",function (user){
+socket.on("response-remove-request-contact-sent",function (user){
 
     //xoa o phan thong bao
     $(".noti_content").find(`div[data-uid = ${user.id}]`).remove();
