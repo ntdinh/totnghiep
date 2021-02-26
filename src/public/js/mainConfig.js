@@ -162,6 +162,11 @@ $("#select-type-chat").bind("change",function (){
   }
 });
 }
+function changeScreenChat(){
+  $(".room-chat").unbind("click").on("click", function(){
+    $(this).tab("show");
+  });
+}
 $(document).ready(function() {
   // Hide số thông báo trên đầu icon mở modal contact
   showModalContacts();
@@ -198,4 +203,7 @@ $(document).ready(function() {
 
   // thay doi cuoc tro chuyen
   changeTypeChat();
+  
+  // thay doi man hinh chat
+  changeScreenChat();
 });

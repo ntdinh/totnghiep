@@ -14,12 +14,12 @@ return new Promise ( async(resolve,reject) =>{
         let userConversationsPromise = contacts.map( async (contact) => {
           if(contact.contactId == currentUserId){
         let getUserContatc =   await UserModel.getUserDataById(contact.userId);
-        getUserContatc.createAt = contact.createAt;
+        getUserContatc.updateAt = contact.updateAt;
         return getUserContatc;
           }
           else {
             let getUserContatc =   await UserModel.getUserDataById(contact.contactId);
-            getUserContatc.createAt = contact.createAt;
+            getUserContatc.updateAt = contact.updateAt;
             return getUserContatc;
           }
         }); 
@@ -29,7 +29,7 @@ return new Promise ( async(resolve,reject) =>{
 
          let allConversations = usersConversations.concat(groupConversations);
          allConversations = _.sortBy(allConversations, (item) =>{
-            return -item.createAt;
+            return -item.updateAt;
          });
          
           resolve({
