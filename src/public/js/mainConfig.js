@@ -164,6 +164,8 @@ $("#select-type-chat").bind("change",function (){
 }
 function changeScreenChat(){
   $(".room-chat").unbind("click").on("click", function(){
+    $(".person").removeClass("active");
+    $(this).find("li").addClass("active");
     $(this).tab("show");
   });
 }
@@ -206,4 +208,6 @@ $(document).ready(function() {
   
   // thay doi man hinh chat
   changeScreenChat();
+
+  $("ul.people").find("li")[0].click();
 });
