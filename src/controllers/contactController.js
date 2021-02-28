@@ -47,19 +47,19 @@ let removeRequestContact = async (req, res) => {
   }
 };
 
-let removeRequestContactSent = async (req, res) => {
-  try {
-    let currentUserId = req.user._id;
-    let contactId = req.body.uid;
-    let removeReq = await contact.removeRequestContactSent(
-      currentUserId,
-      contactId
-    );
-    return res.status(200).send({ success: !!removeReq });
-  } catch (error) {
-    return res.status(500).send(error);
-  }
-};
+// let removeRequestContact = async (req, res) => {
+//   try {
+//     let currentUserId = req.user._id;
+//     let contactId = req.body.uid;
+//     let removeReq = await contact.removeRequestContac(
+//       currentUserId,
+//       contactId
+//     );
+//     return res.status(200).send({ success: !!removeReq });
+//   } catch (error) {
+//     return res.status(500).send(error);
+//   }
+// };
 
 let removeREquestContactReceived = async (req, res) => {
   try {
@@ -159,7 +159,6 @@ module.exports = {
   findUsersContact,
   addNew : addNew,
   removeRequestContact : removeRequestContact,
-  removeRequestContactSent,
   removeREquestContactReceived,
   approveRequestContactReceived,
   readMoreContacts,

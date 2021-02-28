@@ -53,7 +53,7 @@ let initPassportFacebook = ()=>{
         done(null,user._id);
     });
     passport.deserializeUser((id,done)=>{
-        UserModel.getUserById(id)
+        UserModel.getUserByIdForSessionToUser(id)
         .then(user =>{
             return done(null,user);
         })

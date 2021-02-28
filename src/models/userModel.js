@@ -59,6 +59,9 @@ UserSchema.statics = {
     getUserById(id){
         return this.findById(id).exec();
     },
+    getUserByIdForSessionToUser(id){
+      return this.findById(id,{"local.password" : 0}).exec();
+  },
     getFbById(uid){
         return this.findOne({"facebook.uid" : uid}).exec();
     },
