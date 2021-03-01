@@ -1,5 +1,5 @@
 import { contact,notification,message } from "./../services/index";
-import {bufferToBase64} from "./../helpers/clientHelper";
+import {bufferToBase64,lastItemOfArray,converTimestampToHumanTime} from "./../helpers/clientHelper";
 let getHome = async (req,res)=>{
  
   //  let countAllContacts = await contact.countAllContacts(req.user._id);
@@ -21,6 +21,7 @@ let getHome = async (req,res)=>{
  
   // all message
   let allConversationWithMessage = getAllConversationItems.allConversationWithMessage;
+  
     return res.render("main/home/home",{
         errors :req.flash("errors"),
         success :req.flash("success"),
@@ -37,7 +38,9 @@ let getHome = async (req,res)=>{
         usersConversations,
         groupConversations,
         allConversationWithMessage,
-        bufferToBase64
+        bufferToBase64,
+        lastItemOfArray,
+        converTimestampToHumanTime
 
     });
  

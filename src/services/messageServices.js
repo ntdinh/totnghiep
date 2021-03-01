@@ -34,9 +34,15 @@ return new Promise ( async(resolve,reject) =>{
             return -item.updateAt;
          });
         let allConversationWithMessagePromise = allConversations.map( async(conversation)=>{
-            let  getMessage =  await MessageModel.model.getMessages(currentUserId, conversation._id,LIMIT_MESSAGES);
-            conversation = conversation.toObject();
+          conversation = conversation.toObject();
+          if(conversation.members) {
+            let  getMessage =  await MessageModel.model.getMessagesInGroup( conversation._id,LIMIT_MESSAGES);
             conversation.messages = getMessage;
+          } else {
+            let  getMessage =  await MessageModel.model.getMessagesInPersonal(currentUserId, conversation._id,LIMIT_MESSAGES);
+            conversation.messages = getMessage;
+          }
+           
             return conversation;
          });
          // lay du lieu cua tin nhan
