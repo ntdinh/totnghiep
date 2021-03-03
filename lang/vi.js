@@ -8,6 +8,7 @@ export const transValidation = {
     update_address : "Địa chỉ không nên dài quá",
     update_phone : "Số điện thoại bắt đầu bằng số 0, giớ hạn từ 10 kí tự",
     find_users_contact: "Không cho phép kí tự đặc biệt, chỉ cho phép chứ số và khoảng trống",
+    message_text_emoji_incorrect :"Tin nhắn không hợp lệ"
     };
      
     
@@ -21,7 +22,8 @@ export const transValidation = {
         serve_error : "Có lỗi phía server, vui lòng liên hệ nhân viên hỗ trợ để được trợ giúp",
         avatar_type : "Kiểu file không hợp lệ",
         avatar_size : "Ảnh vượt quá kích thước 1MB",
-        user_password_falid : "Mật khẩu hiện tại chưa chính xác"
+        user_password_falid : "Mật khẩu hiện tại chưa chính xác",
+        conversation_not_found : "Cuộc trò chuyện không tồn tại"
     };
     export const transSuccess = {
         userCreated : (userEmail)=>{

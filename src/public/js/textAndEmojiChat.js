@@ -18,10 +18,10 @@ function textAndEmojiChat(divId) {
             // goij ve gui message
             $.post("/message/add-new-text-emoji",dataTextEmojiForSent, function(data){
                     // success
-
+                    console.log(data)
                     
             }).fail(function(response){
-
+                alertify.notify(response.responseText, "error",5);
             });
         }
     });

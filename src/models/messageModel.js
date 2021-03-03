@@ -29,6 +29,9 @@ let MessageSchema = new Schema({
 });
  
 MessageSchema.statics = {
+    createNew(item){
+        return this.create(item);
+    },
     getMessagesInPersonal(senserId,receiverId, limit) {
         return this.find({
             $or : [
