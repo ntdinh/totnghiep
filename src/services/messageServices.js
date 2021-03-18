@@ -4,10 +4,10 @@ import UserModel from './../models/userModel';
 import ChatGroupModel from './../models/chatGroupModel';
 import MessageModel from './../models/messageModel';
 import _  from "lodash";
-import { all, reject, resolve } from 'bluebird';
+ 
 import {transErrors} from "./../../lang/vi";
 import {app} from "./../config/app";
-import { response } from 'express';
+ 
 
 const LIMIT_CONVER = 15;
 const LIMIT_MESSAGES = 40;
@@ -40,10 +40,10 @@ return new Promise ( async(resolve,reject) =>{
           conversation = conversation.toObject();
           if(conversation.members) {
             let  getMessage =  await MessageModel.model.getMessagesInGroup( conversation._id,LIMIT_MESSAGES);
-            conversation.messages = getMessage;
+            conversation.messages = _.reverse(getMessage);
           } else {
             let  getMessage =  await MessageModel.model.getMessagesInPersonal(currentUserId, conversation._id,LIMIT_MESSAGES);
-            conversation.messages = getMessage;
+            conversation.messages =  _.reverse(getMessage);
           }
            
             return conversation;
@@ -72,24 +72,24 @@ return new Promise ( async(resolve,reject) =>{
     try {
       if(isChatGroup){
         let getChatGroupReceiver = await ChatGroupModel.getChatBroupById(receiverId);
-        if(getChatGroupReceiver) {
+        if(!getChatGroupReceiver) {
           return reject(transErrors.conversation_not_found);
         }
         let receiver = {
           id: getChatGroupReceiver._id,
           name : getChatGroupReceiver.name,
           avatar : app.general_avatar_group_chat
-        }
+        };
 
         let newMessageItem = {
           SenderId : sender.id,
-    receiverId : receiver.id,
-    conversationType :MessageModel.conversationType.GROUP,
-    messageType : MessageModel.messageType.TEXT,
+          receiverId : receiver.id,
+          conversationType :MessageModel.conversationType.GROUP,
+           messageType : MessageModel.messageType.TEXT,
      sender :sender,
      receiver : receiver,
-     text :String,
-     file :messageVal,
+     text :messageVal,
+     //file :messageVal,
     
     createAt: Date.now(),
         };
@@ -98,7 +98,7 @@ return new Promise ( async(resolve,reject) =>{
         resolve(newMessage);
       }  else {
         let getUserReceiver = await UserModel.getUserDataById(receiverId);
-        if(getUserReceiver) {
+        if(!getUserReceiver) {
           return reject(transErrors.conversation_not_found);
       }
       let receiver = {
@@ -112,11 +112,12 @@ return new Promise ( async(resolve,reject) =>{
   conversationType :MessageModel.conversationType.PERSONAL,
   messageType : MessageModel.messageType.TEXT,
    sender :sender,
-   receiver : receiver,
-   text :String,
-   file :messageVal,
+   receiver : receiver, 
+   text :messageVal,
+   //file :messageVal,
   createAt: Date.now(),
       };
+      // tao moi message
       let newMessage = await MessageModel.model.createNew(newMessageItem);
        await  ContacModel.updateWhenHasNewMessage(sender.id,getUserReceiver._id);
       resolve(newMessage);

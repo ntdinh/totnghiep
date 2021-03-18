@@ -29,7 +29,7 @@ let UserSchema = new Schema({
     token: String,
     email: { type: String, trim: true }
   },
-  createdAt: { type: Number, default: Date.now },
+  createAt: { type: Number, default: Date.now },
   updatedAt: { type: Number, default: null },
   deletedAt: { type: Number, default: null }
 });
