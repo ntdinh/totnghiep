@@ -32,6 +32,11 @@ let ChatGroupSchema = new Schema({
          "messageAmount" : newMessageAmount,
          "updateAt" : Date.now()
       }).exec();
+    },
+    getChatGroupIdByUser(userId){
+      return this.find({
+         "members" : {$elemMatch : {"userId" : userId}}
+      },{_id : 1}).exec();
     }
  }
 module.exports = mongoose.model("chat-group",ChatGroupSchema)

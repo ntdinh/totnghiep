@@ -1,6 +1,7 @@
 import passport  from "passport";
 import passportGoogle from "passport-google-oauth";
 import UserModel from "./../../models/userModel";
+import ChatGroupModel from "./../../models/chatGroupModel";
 import {transErrors,transSuccess} from "./../../../lang/vi";
 //require('dotenv').config();
 import dotenv from "dotenv";
@@ -52,14 +53,16 @@ let initPassportGoogle = ()=>{
     passport.serializeUser((user,done)=>{
         done(null,user._id);
     });
-    passport.deserializeUser((id,done)=>{
-        UserModel.getUserByIdForSessionToUser(id)
-        .then(user =>{
-            return done(null,user);
-        })
-        .catch(error =>{
+    passport.deserializeUser( async(id,done)=>{
+        try {
+            let user =  await   UserModel.getUserByIdForSessionToUser(id);
+            let getChatGroupId = await ChatGroupModel.getChatGroupIdByUser(user._id);
+            user=  user.toObject();
+            user.chatGroupId = getChatGroupId;
+            return done(error, null);
+        } catch (error) {
             return(error,null);
-        })
+        }
     });
 };
 module.exports = initPassportGoogle;
