@@ -83,7 +83,9 @@ socket.on("response-chat-text-emoji", function(response){
         title="${response.message.sender.name}"/>`;
           messageOfYou.html(`${senderAvatar} ${converEmojiMessage}`);
      divId =  response.currenGroupId;
-     
+     if(response.currenUserId!== $("dropdown-navbar-user").data["uid"]) {
+      increaseNumberMessageGroup(divId);
+     }
       dataToEmit.groupId = targetId;
     } else {
       messageOfYou.html(converEmojiMessage);
@@ -93,7 +95,6 @@ socket.on("response-chat-text-emoji", function(response){
     if(response.currenUserId!== $("dropdown-navbar-user").data["uid"]) {
         $(`.right .chat[data-chat=${divId}]`).append(messageOfYou);
     nineScrollRight(divId);
-    increaseNumberMessageGroup(divId);
     }
     
 
