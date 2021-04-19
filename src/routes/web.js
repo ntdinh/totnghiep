@@ -58,6 +58,7 @@ let router = express.Router();
 
 
     router.post( "/message/add-new-text-emoji",auth.checkLoggedIn,mesagetValid.checkMessageLength,message.addNewTextEmoji);
+    router.post( "/message/add-new-image",auth.checkLoggedIn,message.addNewImage);
     return app.use("/",router);
     
  };

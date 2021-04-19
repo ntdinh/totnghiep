@@ -23,7 +23,9 @@ export const transValidation = {
         avatar_type : "Kiểu file không hợp lệ",
         avatar_size : "Ảnh vượt quá kích thước 1MB",
         user_password_falid : "Mật khẩu hiện tại chưa chính xác",
-        conversation_not_found : "Cuộc trò chuyện không tồn tại"
+        conversation_not_found : "Cuộc trò chuyện không tồn tại",
+        image_type : "Kiểu file không hợp lệ",
+        image_size : "Ảnh vượt quá kích thước 1MB",
     };
     export const transSuccess = {
         userCreated : (userEmail)=>{

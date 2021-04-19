@@ -180,8 +180,10 @@ function changeScreenChat(){
     //cau hinh thanh cuon ben box chat rightSide.ejs
     
     nineScrollRight(divId);
-
+// bat emoji 
     enableEmojioneArea(divId);
+// bat lang nghe DOm cho viec chat tin nhan va hinh anh
+    imageChat(divId);
   });
 }
 function convertEmoji(){

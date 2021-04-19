@@ -53,13 +53,13 @@ function textAndEmojiChat(divId) {
                     $(`person[data-chat=${divId}]`).find("span.preview").html(emojione.toImage(data.message.text));
 
                     // dua len dau sau khi nhan tin
-                    $(`person[data-chat=${divId}]`).on("click.moveConversationToTop",function(){
+                    $(`person[data-chat=${divId}]`).on("chat.moveConversationToTop",function(){
                         let dataToMove = $(this).parent();
                         $(this).closest("ul").prepend(dataToMove);
-                        $(this).off("click.moveConversationToTop");
-
+                        $(this).off("chat.moveConversationToTop");
+                
                     });
-                    $(`person[data-chat=${divId}]`).click();
+                    $(`person[data-chat=${divId}]`).trigger("chat.moveConversationToTop");
                     // xu li realtime
                     socket.emit("chat-text-emoji",dataToEmit)
                 }).fail(function(response){
@@ -95,6 +95,7 @@ socket.on("response-chat-text-emoji", function(response){
     if(response.currenUserId!== $("dropdown-navbar-user").data["uid"]) {
         $(`.right .chat[data-chat=${divId}]`).append(messageOfYou);
     nineScrollRight(divId);
+    $(`person[data-chat=${divId}]`).find("span.time").addClass("message-time-realtime");
     }
     
 
@@ -102,17 +103,17 @@ socket.on("response-chat-text-emoji", function(response){
 
 
     // Buoc 4 : 
-    $(`person[data-chat=${divId}]`).find("span.time").addClass("message-time-realtime").html(moment(response.message.createdAt).locale("vi").startOf("seconds").fromNow());
-                    $(`person[data-chat=${divId}]`).find("span.preview").html(emojione.toImage(response.message.text));
+    $(`person[data-chat=${divId}]`).find("span.time").html(moment(response.message.createdAt).locale("vi").startOf("seconds").fromNow());
+    $(`person[data-chat=${divId}]`).find("span.preview").html(emojione.toImage(response.message.text));
 
     // buoc 5 : 
-    $(`person[data-chat=${divId}]`).on("click.moveConversationToTop",function(){
+    $(`person[data-chat=${divId}]`).on("chat.moveConversationToTop",function(){
         let dataToMove = $(this).parent();
         $(this).closest("ul").prepend(dataToMove);
-        $(this).off("click.moveConversationToTop");
+        $(this).off("chat.moveConversationToTop");
 
     });
-    $(`person[data-chat=${divId}]`).click();
+    $(`person[data-chat=${divId}]`).trigger("chat.moveConversationToTop");
     // Buoc 6 : 
 
 });
